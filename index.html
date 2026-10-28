@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="OmniCalc - A modern, ultra-sleek, scientific and standard web calculator with live evaluation, unit converter, calculation history, customizable themes, and tactile sound effects.">
+  <meta name="keywords" content="calculator, scientific calculator, online calculator, unit converter, web calculator, glassmorphism">
+  <meta name="author" content="OmniCalc">
+  <title>OmniCalc — Modern Scientific & Standard Calculator</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b5cf6' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='2' width='16' height='20' rx='3'/><line x1='8' y1='6' x2='16' y2='6'/><line x1='16' y1='14' x2='16' y2='18'/><path d='M16 10h.01'/><path d='M12 10h.01'/><path d='M8 10h.01'/><path d='M12 14h.01'/><path d='M8 14h.01'/><path d='M12 18h.01'/><path d='M8 18h.01'/></svg>">
+
+  <!-- Open Graph & Social Cards -->
+  <meta property="og:title" content="OmniCalc — Modern Scientific & Standard Calculator">
+  <meta property="og:description" content="A modern, glassmorphic scientific calculator & unit converter built with HTML, CSS, and JS.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Outfit for UI, JetBrains Mono for Mathematical Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="obsidian">
+  <!-- Dynamic Ambient Background Glows -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+  <div class="ambient-glow glow-3" aria-hidden="true"></div>
+
+  <main class="app-container">
+    <!-- Calculator Card -->
+    <section class="calculator-card" id="calculator-app" aria-label="OmniCalc Application">
+      <!-- Top Bar: Logo & Tool Actions -->
+      <header class="calc-header">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="3"></rect>
+              <line x1="8" y1="6" x2="16" y2="6"></line>
+              <line x1="16" y1="14" x2="16" y2="18"></line>
+              <path d="M16 10h.01"></path>
+              <path d="M12 10h.01"></path>
+              <path d="M8 10h.01"></path>
+              <path d="M12 14h.01"></path>
+              <path d="M8 14h.01"></path>
+              <path d="M12 18h.01"></path>
+              <path d="M8 18h.01"></path>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <h1 class="brand-title">OmniCalc</h1>
+            <span class="brand-subtitle">Precision Engine</span>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <!-- Audio Toggle -->
+          <button type="button" class="icon-btn" id="sound-toggle-btn" title="Toggle audio feedback (Click sounds)" aria-label="Toggle audio feedback">
+            <svg class="icon-sound-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+            <svg class="icon-sound-off hide" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+          </button>
+
+          <!-- Theme Selector Dropdown Trigger -->
+          <div class="theme-dropdown-container">
+            <button type="button" class="icon-btn" id="theme-btn" title="Change Theme" aria-label="Change Theme">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+              </svg>
+            </button>
+            <div class="theme-menu hide" id="theme-menu">
+              <button type="button" class="theme-option active" data-set-theme="obsidian">
+                <span class="theme-swatch obsidian"></span> Obsidian Neon
+              </button>
+              <button type="button" class="theme-option" data-set-theme="cyberpunk">
+                <span class="theme-swatch cyberpunk"></span> Cyberpunk
+              </button>
+              <button type="button" class="theme-option" data-set-theme="emerald">
+                <span class="theme-swatch emerald"></span> Matrix Emerald
+              </button>
+              <button type="button" class="theme-option" data-set-theme="frost">
+                <span class="theme-swatch frost"></span> Frosted Light
+              </button>
+            </div>
+          </div>
+
+          <!-- History Toggle Button -->
+          <button type="button" class="icon-btn" id="history-toggle-btn" title="Calculation History (H)" aria-label="Toggle calculation history">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span class="history-badge hide" id="history-badge">0</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Navigation Tabs: Standard, Scientific, Unit Converter -->
+      <nav class="mode-tabs" aria-label="Calculator Modes">
+        <button type="button" class="mode-tab active" data-mode="standard" id="tab-standard">Standard</button>
+        <button type="button" class="mode-tab" data-mode="scientific" id="tab-scientific">Scientific</button>
+        <button type="button" class="mode-tab" data-mode="converter" id="tab-converter">Converter</button>
+      </nav>
+
+      <!-- CALCULATOR VIEW (Standard & Scientific) -->
+      <div class="calc-view" id="calc-view">
+        <!-- Display Screen -->
+        <div class="display-container" id="display-container">
+          <div class="display-top-row">
+            <div class="status-tags">
+              <span class="tag-badge deg-rad-tag" id="angle-mode-tag" title="Click to toggle DEG/RAD">DEG</span>
+              <span class="tag-badge memory-tag hide" id="memory-active-tag">M</span>
+            </div>
+            <!-- Expression Line -->
+            <div class="expression-line" id="expression-display" title="Calculation Expression"></div>
+          </div>
+
+          <!-- Live Preview Line -->
+          <div class="live-preview-row">
+            <span class="live-preview-label">ans =</span>
+            <span class="live-preview-val" id="live-preview-val"></span>
+          </div>
+
+          <!-- Primary Output Line with Copy action -->
+          <div class="main-display-row">
+            <div class="main-display" id="main-display" title="Click to copy result">0</div>
+            <button type="button" class="copy-display-btn" id="copy-display-btn" title="Copy to clipboard" aria-label="Copy result">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Memory Action Row -->
+        <div class="memory-bar" id="memory-bar">
+          <button type="button" class="mem-btn" data-mem="MC" id="btn-mc" title="Memory Clear">MC</button>
+          <button type="button" class="mem-btn" data-mem="MR" id="btn-mr" title="Memory Recall">MR</button>
+          <button type="button" class="mem-btn" data-mem="M+" id="btn-mplus" title="Memory Add">M+</button>
+          <button type="button" class="mem-btn" data-mem="M-" id="btn-mminus" title="Memory Subtract">M-</button>
+          <button type="button" class="mem-btn" data-mem="MS" id="btn-ms" title="Memory Store">MS</button>
+        </div>
+
+        <!-- Scientific Keys Section (Dynamic reveal) -->
+        <div class="scientific-panel hide" id="scientific-panel">
+          <button type="button" class="key key-sci" data-action="angle-toggle" id="btn-angle-toggle">DEG</button>
+          <button type="button" class="key key-sci" data-action="sin" id="btn-sin">sin</button>
+          <button type="button" class="key key-sci" data-action="cos" id="btn-cos">cos</button>
+          <button type="button" class="key key-sci" data-action="tan" id="btn-tan">tan</button>
+          <button type="button" class="key key-sci" data-action="pi" id="btn-pi">π</button>
+
+          <button type="button" class="key key-sci" data-action="pow" id="btn-pow">xʸ</button>
+          <button type="button" class="key key-sci" data-action="square" id="btn-sqr">x²</button>
+          <button type="button" class="key key-sci" data-action="sqrt" id="btn-sqrt">√x</button>
+          <button type="button" class="key key-sci" data-action="log" id="btn-log">log</button>
+          <button type="button" class="key key-sci" data-action="ln" id="btn-ln">ln</button>
+
+          <button type="button" class="key key-sci" data-action="open-paren" id="btn-open-paren">(</button>
+          <button type="button" class="key key-sci" data-action="close-paren" id="btn-close-paren">)</button>
+          <button type="button" class="key key-sci" data-action="factorial" id="btn-fact">n!</button>
+          <button type="button" class="key key-sci" data-action="e" id="btn-e">e</button>
+          <button type="button" class="key key-sci" data-action="inv" id="btn-inv">1/x</button>
+        </div>
+
+        <!-- Main Standard Keypad Grid -->
+        <div class="keypad-grid" id="standard-keypad">
+          <!-- Row 1 -->
+          <button type="button" class="key key-fn key-clear" data-action="clear-all" id="btn-clear" title="Clear all (Escape)">AC</button>
+          <button type="button" class="key key-fn" data-action="backspace" id="btn-backspace" title="Backspace (Backspace)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+              <line x1="18" y1="9" x2="12" y2="15"></line>
+              <line x1="12" y1="9" x2="18" y2="15"></line>
+            </svg>
+          </button>
+          <button type="button" class="key key-fn" data-action="percent" id="btn-percent" title="Percentage (%)">%</button>
+          <button type="button" class="key key-op" data-action="divide" data-op="÷" id="btn-divide" title="Divide (/)">÷</button>
+
+          <!-- Row 2 -->
+          <button type="button" class="key key-num" data-num="7" id="btn-7">7</button>
+          <button type="button" class="key key-num" data-num="8" id="btn-8">8</button>
+          <button type="button" class="key key-num" data-num="9" id="btn-9">9</button>
+          <button type="button" class="key key-op" data-action="multiply" data-op="×" id="btn-multiply" title="Multiply (*)">×</button>
+
+          <!-- Row 3 -->
+          <button type="button" class="key key-num" data-num="4" id="btn-4">4</button>
+          <button type="button" class="key key-num" data-num="5" id="btn-5">5</button>
+          <button type="button" class="key key-num" data-num="6" id="btn-6">6</button>
+          <button type="button" class="key key-op" data-action="subtract" data-op="−" id="btn-subtract" title="Subtract (-)">−</button>
+
+          <!-- Row 4 -->
+          <button type="button" class="key key-num" data-num="1" id="btn-1">1</button>
+          <button type="button" class="key key-num" data-num="2" id="btn-2">2</button>
+          <button type="button" class="key key-num" data-num="3" id="btn-3">3</button>
+          <button type="button" class="key key-op" data-action="add" data-op="+" id="btn-add" title="Add (+)">+</button>
+
+          <!-- Row 5 -->
+          <button type="button" class="key key-fn" data-action="negate" id="btn-negate" title="Toggle sign">±</button>
+          <button type="button" class="key key-num" data-num="0" id="btn-0">0</button>
+          <button type="button" class="key key-num" data-action="decimal" id="btn-decimal">.</button>
+          <button type="button" class="key key-equals" data-action="equals" id="btn-equals" title="Calculate (Enter or =)">=</button>
+        </div>
+      </div>
+
+      <!-- UNIT CONVERTER VIEW -->
+      <div class="converter-view hide" id="converter-view">
+        <div class="converter-category-bar">
+          <label for="converter-category-select" class="visually-hidden">Conversion Category</label>
+          <select id="converter-category-select" class="converter-select">
+            <option value="length">Length</option>
+            <option value="weight">Weight & Mass</option>
+            <option value="temperature">Temperature</option>
+            <option value="data">Digital Data</option>
+            <option value="speed">Speed</option>
+            <option value="time">Time</option>
+          </select>
+        </div>
+
+        <div class="converter-card-panel">
+          <!-- Input Card -->
+          <div class="converter-box">
+            <span class="converter-box-label">From</span>
+            <input type="number" id="converter-from-input" class="converter-number-input" value="1" step="any" placeholder="0">
+            <select id="converter-from-unit" class="converter-unit-select" aria-label="Convert from unit"></select>
+          </div>
+
+          <!-- Swap Button -->
+          <div class="converter-swap-wrap">
+            <button type="button" class="converter-swap-btn" id="converter-swap-btn" title="Swap Units" aria-label="Swap conversion units">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="17 1 21 5 17 9"></polyline>
+                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                <polyline points="7 23 3 19 7 15"></polyline>
+                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Output Card -->
+          <div class="converter-box">
+            <span class="converter-box-label">To</span>
+            <input type="number" id="converter-to-input" class="converter-number-input" value="0" readonly placeholder="0">
+            <select id="converter-to-unit" class="converter-unit-select" aria-label="Convert to unit"></select>
+          </div>
+
+          <div class="converter-formula" id="converter-formula-text">1 Meter = 3.28084 Feet</div>
+        </div>
+      </div>
+
+      <!-- KEYBOARD SHORTCUTS HINT -->
+      <footer class="calc-footer">
+        <span class="shortcut-tip"><kbd>Enter</kbd> = <kbd>Esc</kbd> AC <kbd>Bksp</kbd> ⌫</span>
+      </footer>
+
+      <!-- HISTORY SLIDE-OVER DRAWER -->
+      <aside class="history-drawer hide" id="history-drawer" aria-label="Calculation History Panel">
+        <div class="history-header">
+          <div class="history-title-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <h3>History</h3>
+          </div>
+          <div class="history-header-actions">
+            <button type="button" class="text-action-btn" id="clear-history-btn" title="Clear All History">Clear</button>
+            <button type="button" class="icon-btn close-drawer-btn" id="close-history-btn" title="Close History">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="history-list" id="history-list">
+          <!-- Dynamically populated calculation items -->
+          <div class="history-empty" id="history-empty">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <p>No calculations yet</p>
+            <span>Your recent results will appear here</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast hide" id="toast" role="status" aria-live="polite">
+    <span id="toast-message">Copied to clipboard</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
